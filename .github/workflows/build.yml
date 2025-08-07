@@ -28,10 +28,11 @@ jobs:
 
       # Step 3: Restore and build the Xamarin project
       - name: Restore NuGet packages
-        run: dotnet restore EngagerMobile.Mariteam/EngagerMobile.Mariteam.sln
+        run: dotnet restore MobileApp/Engager_Mobile/Engager_Mobile.sln
 
       - name: Build project
-        run: dotnet build EngagerMobile.Mariteam/EngagerMobile.Mariteam.sln --configuration Release
+        run: dotnet build MobileApp/Engager_Mobile/Engager_Mobile.sln --configuration Release
+
 
       # Step 4: Run SonarCloud scan
       - name: SonarCloud Scan
