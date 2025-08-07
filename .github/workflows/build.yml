@@ -22,14 +22,12 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore NuGet packages
-        run: dotnet restore MobileApp/EngagerMobile.Mariteam.sln
+        run: dotnet restore EngagerMobile.Mariteam.sln
 
       - name: Build project
-        run: dotnet build MobileApp/EngagerMobile.Mariteam.sln --no-restore --configuration Release
+        run: dotnet build EngagerMobile.Mariteam.sln --no-restore --configuration Release
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: MobileApp
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
