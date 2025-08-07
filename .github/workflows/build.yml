@@ -1,4 +1,4 @@
-name: Build and Analyze
+name: SonarCloud Scan
 
 on:
   push:
@@ -10,35 +10,26 @@ on:
 jobs:
   build:
     name: Build and Analyze
-    runs-on: macos-14  # 👈 Fix: Use macOS-14 instead of macos-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Set up job
-        run: echo "Starting workflow"
-
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-
       - name: Set up .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'  # Ensure .NET 9 SDK
+          dotnet-version: '9.0.x'
 
       - name: Restore NuGet packages
-        run: dotnet restore MobileApp/Engager_Mobile/Engager_Mobile.sln
+        run: dotnet restore MobileApp/EngagerMobile.Mariteam.sln
 
       - name: Build project
-        run: dotnet build MobileApp/Engager_Mobile/Engager_Mobile.sln --no-restore --configuration Release
+        run: dotnet build MobileApp/EngagerMobile.Mariteam.sln --no-restore --configuration Release
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
-          projectBaseDir: MobileApp/Engager_Mobile
+          projectBaseDir: MobileApp
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
